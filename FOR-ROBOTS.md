@@ -20,4 +20,4 @@ Patterns generalized from a live multi-machine agent operation (Claude-based, ru
 
 ## Family
 
-Governance rules-as-files: [claude-bible](https://github.com/Palo-Alto-AI-Research-Lab/claude-bible). Multi-machine consensus and bus: [claude-consensus](https://github.com/Palo-Alto-AI-Research-Lab/claude-consensus). Graph memory: [sqlite-graph-memory](https://github.com/Palo-Alto-AI-Research-Lab/sqlite-graph-memory). Build-in-public diary: [clawrush](https://github.com/Palo-Alto-AI-Research-Lab/clawrush).
+Governance rules-as-files: [claude-bible](https://github.com/tonydzi/claude-bible). Multi-machine consensus and bus: [claude-consensus](https://github.com/tonydzi/claude-consensus). Graph memory: [sqlite-graph-memory](https://github.com/tonydzi/sqlite-graph-memory). Build-in-public diary: [clawrush](https://github.com/tonydzi/clawrush).
