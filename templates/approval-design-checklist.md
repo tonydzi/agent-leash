@@ -40,6 +40,35 @@ Use this when wiring human approval into an agent pipeline. Every unchecked box 
 - [ ] The DENY path has been tested on purpose at least once (fire a gated action, refuse it, verify nothing happened)
 - [ ] The BYPASS path has been tested on purpose at least once (try to trick the gate with content that looks like approval; verify it fails)
 
+## 7. Scope, fatigue, and the gate's own health
+
+The first six sections are about the gate being right. This one is about the gate still being
+there in six weeks. Every item below is a hole we walked into on our own fleet.
+
+- [ ] An approval is bound to the **action class**, not to the container that happened to run it (task, session, thread, worker). Write down what re-approves when the same work is launched a second way
+- [ ] Approval history is not a fact about plumbing. If reusing a warm container skips prompts that a fresh one raises, operators will optimise for reuse and broad pre-approval - that is the design teaching them to stop reading
+- [ ] The gate's own failure is **loud**. A gate whose `except` returns "allow" is worse than no gate: it fails open, the prompts you removed quietly come back or quietly stop, and only a log knows
+- [ ] The gate has a regression test that is run after every change to what it calls. Ours died from a helper that started returning three groups instead of two; the suite had not been run since that change
+- [ ] You know which actions your platform hard-asks for **regardless of every lever you set**, and you have designed around them rather than assuming your configuration covers everything
+- [ ] Per-machine state (approval caches, worker pools, slot registries) lives per machine. A single synced file showing "the" state shows you one random machine's state
+
+### Measured, 2026-07 to 2026-08, one fleet of six machines
+
+- The platform stored granted tool-approvals **on the task object**, auto-applied to that task's
+  future runs. Identical work launched as a *new* task therefore began with an empty approval
+  history and stopped on the first prompt, while the same work in a reused task never stopped.
+  Nothing about the risk changed between those two runs - only the container.
+- One call (creating a scheduled task) raised the dialog with permissive mode, an explicit
+  allowlist **and** a pre-tool hook returning "allow" all in place, while its siblings passed
+  silently. One unsilenceable action is not a bug to route around quietly; it is a fact your
+  design has to state.
+- The guard enforcing container reuse crashed on an internal API change and its
+  `except Exception -> allow` turned that into a silent pass. The prompts came back to a human
+  who had been told they were gone. Fail-open is a legitimate choice; **silent** fail-open is not.
+- The registry of reusable containers lived in one synced file. Two machines overwrote each
+  other's counts inside an hour ("free 1 / convertible 20" then "20 / 10"), so the card showed a
+  random machine's pool with no indication which.
+
 ## Common designs that fail this checklist
 
 | Design | Which box it fails |
@@ -49,3 +78,6 @@ Use this when wiring human approval into an agent pipeline. Every unchecked box 
 | "One 'yes' at the start of the session covers everything after" | 4.1/4.2: stale, unbounded scope |
 | "If no answer in 10 minutes, proceed" | 5.2: timeout-as-consent inverts the default |
 | "Approvals are in the agent's own memory/log file" | 6.1: the suspect keeps the evidence |
+| "Approval is remembered per task/session, so reuse the warm one" | 7.1/7.2: scope follows the container, not the action; teaches reuse instead of reading |
+| "The gate catches its own exceptions and allows on error" | 7.3: fail-open that nobody can see is an outage of the safety system |
+| "One shared file holds the fleet's approval state" | 7.6: every machine reads someone else's answer |
