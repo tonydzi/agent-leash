@@ -3,13 +3,13 @@
   "protocolVersion": "1.0",
   "name": "LEASH-8 Scorecard Agent",
   "description": "Educational agent for the LEASH-8 control model: explains the 8 control domains for AI agents with delegated authority, walks an architecture through the scorecard, and returns a scored, evidence-oriented readout. It does not execute actions, hold credentials, or connect to your infrastructure: input is your description, output is text.",
-  "url": "https://github.com/Palo-Alto-AI-Research-Lab/agent-leash",
+  "url": "https://github.com/tonydzi/agent-leash",
   "provider": {
     "organization": "Palo Alto Research Lab (Anton Dzyatkovsky)",
-    "url": "https://github.com/Palo-Alto-AI-Research-Lab"
+    "url": "https://github.com/tonydzi"
   },
   "version": "0.1.0",
-  "documentationUrl": "https://github.com/Palo-Alto-AI-Research-Lab/agent-leash/blob/main/docs/a2a-agent-card.md",
+  "documentationUrl": "https://github.com/tonydzi/agent-leash/blob/main/docs/a2a-agent-card.md",
   "capabilities": {
     "streaming": false,
     "pushNotifications": false,
