@@ -12,7 +12,33 @@ The vendors' answer is "buy an AI security platform". The research answer is sob
 
 What actually works is boring: **layered controls that shrink the blast radius and raise the attacker's cost.** That is what this repo teaches.
 
-We are not a security vendor. We run a multi-machine agent operation in production every day, and these are the control patterns we run ourselves. We publish patterns, not our live control surfaces.
+We are not a security vendor. We run a multi-machine agent operation in production every day — **6 machines (Windows, macOS, Linux), 200+ scheduled agent routines, running unattended for months** — and these are the control patterns we run ourselves. We publish patterns, not our live control surfaces.
+
+## The fleet layer: kill, cap, replay
+
+Most agent-security tooling guards **one agent's next action**. The failure mode that actually
+costs you money starts one floor up, the moment agents run on more than one machine:
+
+- **Kill** — when a run goes wrong at 3am, "stop the agent" must mean the *fleet*, not one
+  process on one box. A kill that requires ssh-ing into six machines is not a control.
+- **Cap** — capability and spend budgets set *before* the run, enforced outside the model.
+  An agent that can be talked into a bigger budget has no budget.
+- **Replay** — a causal log of what every agent actually did, attributable per agent and per
+  machine, so "what changed last night and who did it" is a query, not an investigation.
+
+```mermaid
+flowchart LR
+    subgraph FLEET["heterogeneous fleet"]
+        A1["machine 1<br/>agents"] --- A2["machine 2<br/>agents"] --- A3["machine N<br/>agents"]
+    end
+    FLEET -->|"every action"| LOG["causal log<br/>(replay)"]
+    GATE["policy gate<br/>(cap)"] -->|"authorize / deny"| FLEET
+    KILL["fleet kill switch"] -->|"stop all"| FLEET
+```
+
+LEASH-8 below is the per-agent half of this model; the fleet half (the log, the budgets, the
+kill path) is what we operate live and are carrying into the open piece by piece — the
+[release feed](https://github.com/tonydzi/agent-leash/releases) tracks what has landed.
 
 ## What's inside
 
