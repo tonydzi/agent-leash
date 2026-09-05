@@ -51,6 +51,7 @@ there in six weeks. Every item below is a hole we walked into on our own fleet.
 - [ ] The gate has a regression test that is run after every change to what it calls. Ours died from a helper that started returning three groups instead of two; the suite had not been run since that change
 - [ ] You know which actions your platform hard-asks for **regardless of every lever you set**, and you have designed around them rather than assuming your configuration covers everything
 - [ ] Per-machine state (approval caches, worker pools, slot registries) lives per machine. A single synced file showing "the" state shows you one random machine's state
+- [ ] The gate reads the **whole** set it claims to guard. Write down the damage area, then check the gate's input covers it - a gate that inspects a *subset* does not fail loudly, it reports a confident "nothing found" over the part it never looked at
 
 ### Measured, 2026-07 to 2026-08, one fleet of six machines
 
@@ -68,6 +69,12 @@ there in six weeks. Every item below is a hole we walked into on our own fleet.
 - The registry of reusable containers lived in one synced file. Two machines overwrote each
   other's counts inside an hour ("free 1 / convertible 20" then "20 / 10"), so the card showed a
   random machine's pool with no indication which.
+- A secret-scanner gating publication read its diff against the last commit. Diffs do not list
+  *untracked* files - and new files are exactly what the guarded operation adds. Seeded with
+  eight kinds of credential in a new file, it caught none of the seven real ones (private key
+  and cloud access key included) and printed "0 lines scanned, 0 findings". Nothing errored, no
+  log line was missing; the gate simply had a smaller idea of the damage area than the operation
+  did. Widening the input to cover new files turned all eight seeds red first, then green.
 
 ## Common designs that fail this checklist
 
@@ -80,4 +87,5 @@ there in six weeks. Every item below is a hole we walked into on our own fleet.
 | "Approvals are in the agent's own memory/log file" | 6.1: the suspect keeps the evidence |
 | "Approval is remembered per task/session, so reuse the warm one" | 7.1/7.2: scope follows the container, not the action; teaches reuse instead of reading |
 | "The gate catches its own exceptions and allows on error" | 7.3: fail-open that nobody can see is an outage of the safety system |
+| "The scanner checks the diff / the changed rows / the last batch" | 7.7: the guarded operation touches more than the gate reads, and a subset scan reports clean |
 | "One shared file holds the fleet's approval state" | 7.6: every machine reads someone else's answer |
