@@ -1,5 +1,24 @@
 # Changelog
 
+## v0.1.2 - 2026-09-05
+
+Docs only: names the layer above LEASH-8, which the repo described per-agent and never
+per-fleet.
+
+- **README: the fleet layer (kill, cap, replay).** Most agent-security tooling guards one
+  agent's next action; the failure that costs money starts one floor up, the moment agents run
+  on more than one machine. Kill has to mean the fleet, because a stop that needs ssh into six
+  boxes at 3am is not a control. Cap has to be set before the run and enforced outside the
+  model, because an agent that can be talked into a bigger budget has no budget. Replay has to
+  be attributable per agent and per machine, so "what changed last night and who did it" is a
+  query rather than an investigation. With a diagram of how the three sit around the fleet.
+- The scale claim in the opening paragraph is now stated instead of implied: 6 machines across
+  Windows, macOS and Linux, 200+ scheduled agent routines, unattended for months. Re-counted on
+  2026-09-05 — 6 nodes in the fleet registry, 248 enabled scheduled tasks on the hub alone, so
+  the fleet-wide "200+" is the conservative reading.
+- Says plainly that LEASH-8 is the per-agent half and the fleet half is being carried into the
+  open piece by piece, rather than implying it is already published.
+
 ## v0.1.1 - 2026-08-29
 
 One new section in the approval checklist, drawn from two months of running agents with
