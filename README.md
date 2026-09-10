@@ -6,7 +6,7 @@
 
 ## The pain
 
-You bolted tools onto your agent: shell, browser, messengers, payments, file system. It works. Then you read about ClawHavoc (roughly one in five marketplace skills compromised), npm publish tokens hijacked to sideload agent platforms, and RCE CVEs in the most popular agent framework, and you realize: **any prompt injection away from your agent, and it acts with everything you gave it.**
+You bolted tools onto your agent: shell, browser, messengers, payments, file system. It works. Then you read about ClawHavoc (an audit found 341 malicious skills among 2,632 on one agent marketplace, and 824 once it grew past 10,700), npm publish tokens hijacked to sideload agent platforms, and RCE CVEs in the most popular agent framework, and you realize: **any prompt injection away from your agent, and it acts with everything you gave it.**
 
 The vendors' answer is "buy an AI security platform". The research answer is sobering: independent benchmarks show that no current defense survives realistic open-ended attacks without either failing or destroying utility. There is no silver bullet.
 
