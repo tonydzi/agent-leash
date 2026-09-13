@@ -10,7 +10,7 @@ You bolted tools onto your agent: shell, browser, messengers, payments, file sys
 
 The vendors' answer is "buy an AI security platform". The research answer is sobering: independent benchmarks show that no current defense survives realistic open-ended attacks without either failing or destroying utility. There is no silver bullet.
 
-What actually works is boring: **layered controls that shrink the blast radius and raise the attacker's cost.** That is what this repo teaches.
+What actually works is boring: **layered controls that shrink the blast radius and raise the attacker's cost.** That is what this repo teaches, domain by domain, in [docs/leash-8.md](docs/leash-8.md).
 
 We are not a security vendor. We run a multi-machine agent operation in production every day — **6 machines (Windows, macOS, Linux), 200+ scheduled agent routines, running unattended for months** — and these are the control patterns we run ourselves. We publish patterns, not our live control surfaces.
 
@@ -20,7 +20,8 @@ Most agent-security tooling guards **one agent's next action**. The failure mode
 costs you money starts one floor up, the moment agents run on more than one machine:
 
 - **Kill** — when a run goes wrong at 3am, "stop the agent" must mean the *fleet*, not one
-  process on one box. A kill that requires ssh-ing into six machines is not a control.
+  process on one box. A kill that requires ssh-ing into six machines is not a control; the
+  rollout-and-proof half of that problem is worked out in [fleet-deploy](https://github.com/tonydzi/fleet-deploy).
 - **Cap** — capability and spend budgets set *before* the run, enforced outside the model.
   An agent that can be talked into a bigger budget has no budget.
 - **Replay** — a causal log of what every agent actually did, attributable per agent and per
@@ -55,7 +56,7 @@ kill path) is what we operate live and are carrying into the open piece by piece
 
 1. Open [SCORECARD.md](SCORECARD.md).
 2. Score your agent system honestly: 24 statements, 0/1/2 each.
-3. Look at your band. Anything scored 0 in Identity, Approvals or Egress is your next week of work.
+3. Look at your band. Anything scored 0 in Identity, Approvals or Egress is your next week of work — the minimal implementation of each domain is in [docs/leash-8.md](docs/leash-8.md).
 4. Use [docs/leash-8.md](docs/leash-8.md) for the minimal implementation of each domain.
 
 ## What we claim and what we don't
