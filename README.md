@@ -125,6 +125,6 @@ demo — and it runs on its own: nothing here phones home to the rest.
 
 **See how the whole thing fits together → [SYSTEM.md](https://github.com/tonydzi/tonydzi/blob/main/SYSTEM.md)**
 
-Its closest neighbours in the **governance** layer: [`claude-bible`](https://github.com/tonydzi/claude-bible) · [`charm-os`](https://github.com/tonydzi/charm-os) · [`agent-approval-gate`](https://github.com/tonydzi/agent-approval-gate)
+Its closest neighbours in the **governance** layer: [`charm-os`](https://github.com/tonydzi/charm-os) · [`agent-approval-gate`](https://github.com/tonydzi/agent-approval-gate) · [`claude-bible`](https://github.com/tonydzi/claude-bible)
 
 <!--ecosystem-map:end-->
