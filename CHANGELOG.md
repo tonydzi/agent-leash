@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+- **§7.7 gained its sequel: the hole moved into the seam.** The publication gate fixed in v0.1.3
+  read two inputs - the working-tree diff and the untracked files - and a new file that had been
+  `git add`-ed fell between them. Same seven credentials through, same confident "0 FAIL". The
+  checklist now says it plainly: if your gate reads its damage area through more than one query,
+  seed the states that fall between them.
+
 ## v0.1.3 - 2026-09-20
 
 One new checkbox in the approval checklist, and one number in the README corrected downward.

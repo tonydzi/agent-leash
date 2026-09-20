@@ -75,6 +75,15 @@ there in six weeks. Every item below is a hole we walked into on our own fleet.
   and cloud access key included) and printed "0 lines scanned, 0 findings". Nothing errored, no
   log line was missing; the gate simply had a smaller idea of the damage area than the operation
   did. Widening the input to cover new files turned all eight seeds red first, then green.
+- **The same scanner, two weeks later, with the hole moved into the seam.** The fix above gave
+  it two inputs: the working-tree diff for tracked files, plus the full text of untracked ones.
+  Between those two sits a state neither reads - a new file that has been `git add`-ed is no
+  longer *untracked*, and a bare `git diff` compares the index against the working tree, so a
+  staged file shows as no change at all. The same seven credentials went straight through again,
+  under the same confident "0 added lines, 0 FAIL". Nothing regressed: the gate had silently
+  become order-dependent, correct when called before staging and blind when called after. If
+  your gate reads its damage area through more than one query, write down the states that fall
+  between them and seed one.
 
 ## Common designs that fail this checklist
 
