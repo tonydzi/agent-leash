@@ -1,5 +1,27 @@
 # Changelog
 
+## v0.1.3 - 2026-09-20
+
+One new checkbox in the approval checklist, and one number in the README corrected downward.
+
+- **[templates/approval-design-checklist.md](templates/approval-design-checklist.md) §7 - the
+  gate has to read the whole set it claims to guard.** This is not fail-open-on-exception, which
+  §7 already covered. Nothing errors and no log line goes missing: the gate simply has a smaller
+  idea of the damage area than the operation it guards, so it prints a confident "nothing found"
+  over the part it never looked at. Measured on our own publication gate: it scanned the diff
+  against the last commit, diffs do not list *untracked* files, and new files are exactly what
+  publishing adds. Seeded with eight kinds of credential in a new file, it caught none of the
+  seven real ones - private key and cloud access key included - and printed "0 lines scanned, 0
+  findings". Widening the input turned all eight seeds red first, then green. The failing-designs
+  table gained the matching row: *"the scanner checks the diff / the changed rows / the last
+  batch"*.
+- **The ClawHavoc figure is now the audited count, not a rounded ratio.** The README opened with
+  "roughly one in five marketplace skills compromised". The audit it refers to found 341 malicious
+  skills among 2,632, and 824 once that marketplace grew past 10,700 - so the README says that
+  instead. A security argument that rounds its own evidence invites the reader to round the rest.
+- README claims are anchored to the files and dates that back them, and the repo points at the
+  system map (SYSTEM.md) it belongs to.
+
 ## v0.1.2 - 2026-09-05
 
 Docs only: names the layer above LEASH-8, which the repo described per-agent and never
