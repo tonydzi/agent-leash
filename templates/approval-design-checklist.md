@@ -52,8 +52,9 @@ there in six weeks. Every item below is a hole we walked into on our own fleet.
 - [ ] You know which actions your platform hard-asks for **regardless of every lever you set**, and you have designed around them rather than assuming your configuration covers everything
 - [ ] Per-machine state (approval caches, worker pools, slot registries) lives per machine. A single synced file showing "the" state shows you one random machine's state
 - [ ] The gate reads the **whole** set it claims to guard. Write down the damage area, then check the gate's input covers it - a gate that inspects a *subset* does not fail loudly, it reports a confident "nothing found" over the part it never looked at
+- [ ] The gate's own **fixtures and rule tables are publishable artifacts**. A sample gate has to contain things that look exactly like secrets, so any scrubber run over it either misses a real leak or breaks the gate. Decide at design time which values are documentation values, and keep the gate itself out of the blind in-place scrub
 
-### Measured, 2026-07 to 2026-08, one fleet of six machines
+### Measured, 2026-07 to 2026-10, one fleet of six machines
 
 - The platform stored granted tool-approvals **on the task object**, auto-applied to that task's
   future runs. Identical work launched as a *new* task therefore began with an empty approval
@@ -85,6 +86,18 @@ there in six weeks. Every item below is a hole we walked into on our own fleet.
   your gate reads its damage area through more than one query, write down the states that fall
   between them and seed one.
 
+- **The gate's own test fixtures leaked, and the scrubber that was supposed to stop that broke the
+  gate.** We publish a sanitised copy of a secret-scanner as a sample. Its `must_catch` fixtures
+  are, by construction, strings shaped like credentials, and two of them were the real addresses of
+  our own machines. The publisher's scrubber then rewrote the file it did not understand: sixteen
+  entries of the number table collapsed into the same placeholder and one character class acquired
+  letters from another alphabet, so the published gate's self-test failed. The leak and the repair
+  were the same design problem seen from two sides. What works: fixtures written as documentation
+  values of the same shape (RFC 5737 addresses for IPv4, so the test still goes red the same way),
+  target strings assembled by concatenation so no whole target exists in the file text, the gate
+  file exempted from in-place scrubbing, and a positive control proving the published copy still
+  catches something before it ships.
+
 ## Common designs that fail this checklist
 
 | Design | Which box it fails |
@@ -98,3 +111,4 @@ there in six weeks. Every item below is a hole we walked into on our own fleet.
 | "The gate catches its own exceptions and allows on error" | 7.3: fail-open that nobody can see is an outage of the safety system |
 | "The scanner checks the diff / the changed rows / the last batch" | 7.7: the guarded operation touches more than the gate reads, and a subset scan reports clean |
 | "One shared file holds the fleet's approval state" | 7.6: every machine reads someone else's answer |
+| "We publish a sanitised copy of our gate, and a scrubber cleans it on the way out" | 7.8: a gate's fixtures must look like secrets, so a blind scrub either leaks or cripples it |

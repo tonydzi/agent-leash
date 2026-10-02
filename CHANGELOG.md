@@ -1,12 +1,22 @@
 # Changelog
 
-## Unreleased
+## v0.1.4 - 2026-10-02
 
 - **§7.7 gained its sequel: the hole moved into the seam.** The publication gate fixed in v0.1.3
   read two inputs - the working-tree diff and the untracked files - and a new file that had been
   `git add`-ed fell between them. Same seven credentials through, same confident "0 FAIL". The
   checklist now says it plainly: if your gate reads its damage area through more than one query,
   seed the states that fall between them.
+
+- **A gate you publish as a sample is a gate you can break by cleaning it.** Our public copy of a
+  secret-scanner carried two of our own machine addresses inside the fixtures it uses to prove it
+  works, and the scrubber that was meant to prevent exactly that rewrote the file into a gate whose
+  self-test failed: sixteen number-table entries collapsed into one placeholder, a character class
+  picked up letters from another alphabet. Both halves have the same cause, which is now a checkbox:
+  a sample gate must contain things shaped like secrets, so decide up front which values are
+  documentation values (RFC 5737 addresses keep the test red the same way), assemble target strings
+  by concatenation so the file text holds no whole target, exempt the gate from in-place scrubbing,
+  and ship it only behind a positive control.
 
 ## v0.1.3 - 2026-09-20
 
