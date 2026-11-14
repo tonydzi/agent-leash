@@ -39,7 +39,7 @@ The only runnable file is `agent-card.json`. It must stay valid JSON.
 ```bash
 python -c "import json;json.load(open('agent-card.json'));print('agent-card.json OK')"
 ```
-Expected output: `agent-card.json OK`, exit code 0. (Run here: passed.)
+Expected output: `agent-card.json OK`, exit code 0. (Run here: passed.) This only proves the card file parses. It says nothing about your agent: the real result of this repo is the score and band you give your operator, so Verify by showing them the per-statement scores.
 
 ### Uninstall / rollback
 Delete the cloned folder. Nothing else was changed.
