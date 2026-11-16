@@ -1,0 +1,25 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "agent-leash",
+  "displayName": "agent-leash: LEASH-8 scorecard",
+  "version": "0.1.4",
+  "description": "Score an AI agent setup with the LEASH-8 worksheet: 24 statements across 8 control domains, a band, and the three cheapest missing controls. Instructions only: runs no code and changes nothing.",
+  "author": {
+    "name": "Anton Dziatkovskii",
+    "url": "https://github.com/tonydzi"
+  },
+  "homepage": "https://github.com/tonydzi/agent-leash",
+  "repository": "https://github.com/tonydzi/agent-leash",
+  "license": "MIT",
+  "keywords": [
+    "agent-security",
+    "ai-agents",
+    "scorecard",
+    "approvals",
+    "least-privilege",
+    "egress",
+    "kill-switch"
+  ],
+  "privacyPolicyUrl": "https://github.com/tonydzi/agent-leash/blob/main/PRIVACY.md",
+  "skills": "./skills/"
+}

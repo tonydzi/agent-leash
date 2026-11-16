@@ -1,0 +1,21 @@
+{
+  "name": "agent-leash",
+  "owner": {
+    "name": "Anton Dziatkovskii",
+    "url": "https://github.com/tonydzi"
+  },
+  "metadata": {
+    "description": "LEASH-8: score how much freedom your AI agent has and which controls are missing.",
+    "version": "0.1.4"
+  },
+  "plugins": [
+    {
+      "name": "agent-leash",
+      "source": "./plugin",
+      "description": "LEASH-8 scorecard skill: 24 statements, 8 control domains, a band and the cheapest missing controls. Instructions only.",
+      "version": "0.1.4",
+      "license": "MIT",
+      "category": "security"
+    }
+  ]
+}
